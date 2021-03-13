@@ -62,6 +62,8 @@ struct ContentView: View {
             .padding()
             .onReceive(timer) { _ in
                 gameController.tick()
+            }.onAppear {
+                dictionary.getLongestWords(using: gameController.grid)
             }
         }
     }

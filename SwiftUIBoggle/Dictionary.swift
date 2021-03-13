@@ -1,6 +1,10 @@
 import Foundation
 
-class Dictionary: ObservableObject {
+protocol LongestWordsReceiving: class {
+    var longestWords: [String]? { get set }
+}
+
+class Dictionary: ObservableObject, LongestWordsReceiving {
     enum State {
         case idle
         case loading
@@ -8,12 +12,15 @@ class Dictionary: ObservableObject {
     }
 
     @Published private(set) var state: State = .idle
+    var longestWords: [String]?
 
     private var tree: WordTree? {
         didSet {
+            guard let tree = tree else { return }
             DispatchQueue.main.async {
                 self.state = .loaded
             }
+            tree.delegate = self
         }
     }
 
@@ -29,7 +36,8 @@ class Dictionary: ObservableObject {
         return tree.isValidWord(word)
     }
 
-//    func getLongestWords(using grid: Grid) {
-//
-//    }
+    func getLongestWords(using grid: Grid) {
+        print("Getting longest words")
+        tree?.getLongestWords(using: grid)
+    }
 }

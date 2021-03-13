@@ -21,6 +21,9 @@ class Node: CustomStringConvertible {
 class WordTree {
 
     private let roots: [Character: Node]
+    weak var delegate: LongestWordsReceiving?
+    private var allWords = Set<String>()
+    private var gridWords = Set<String>()
 
     init() {
         let path = Bundle.main.path(forResource: "words", ofType: "txt")
@@ -38,6 +41,7 @@ class WordTree {
         })
 
         for word in dictionary {
+            allWords.insert(word)
             guard let firstChar = word.first, var currentNode = roots[firstChar] else { continue }
             for character in String(word.dropFirst()) {
                 if let childNode = currentNode.children[character] {
@@ -62,53 +66,56 @@ class WordTree {
         return currentNode.isEndofWord
     }
 
-//    func getLongestWords(using grid: Grid) -> [String] {
-//        for x in 0..<grid.count {
-//            for y in 0..<grid[x].count {
-//                let startPoint = Coord(x, y)
-//                let startString = grid[startPoint.x][startPoint.y].lowercased()
-//                if startString == "Qu" {
-//                    let startNode = roots["q"]!
-//                    let secondNode = startNode.children["u"]!
-//                    traverse(grid: grid, start: startPoint, visited: [], treeNode: secondNode)
-//                    return
-//                }
-//                let startChar = Character(grid[startPoint.x][startPoint.y].lowercased())
-//                traverse(grid: grid, start: startPoint, visited: [], treeNode: roots[startChar]!)
-//            }
-//        }
-//        print(Set(self.allWords).sorted(by: { (lhs, rhs) -> Bool in
-//            lhs.count > rhs.count
-//        }))
-//    }
-//
-//    func traverse(grid: [[String]], start: Coord, visited: [Coord], treeNode: Node) {
-//        let adjacents = getAdjacents(of: start, in: grid)
-//        if adjacents.count > 0 {
-//            for adjacentCoord in adjacents {
-//                if visited.contains(adjacentCoord) { continue }
-//                let adjacentChar = Character(grid[adjacentCoord.x][adjacentCoord.y].lowercased())
-//                if let child = treeNode.children[adjacentChar] {
-//                    traverse(grid: grid, start: adjacentCoord, visited: visited + [start], treeNode: child)
-//                }
-//            }
-//        }
-//        let word = (visited.map({ grid[$0.x][$0.y] }).joined() + grid[start.x][start.y]).lowercased()
-//        if visited.count >= 2 && words.contains(word) {
-//            self.allWords.append(word)
-//        }
-//    }
-//
-//    func getAdjacents(of coord: Coord, in grid: [[String]]) -> [Coord] {
-//        var temp = [Coord]()
-//        let x = coord.x
-//        let y = coord.y
-//        for i in x-1...x+1 where i >= 0 && i < grid.count {
-//            for j in y-1...y+1 where j >= 0 && j < grid[i].count {
-//                guard (x, y) != (i, j) else { continue }
-//                temp.append(Coord(i, j))
-//            }
-//        }
-//        return temp
-//    }
+    func getLongestWords(using grid: Grid) {
+        gridWords.removeAll()
+        DispatchQueue.global().async {
+            for x in 0..<grid.count {
+                for y in 0..<grid[x].count {
+                    let startPoint = Coord(x, y)
+                    let startString = grid[startPoint.x][startPoint.y].lowercased()
+                    if startString == "Qu" {
+                        let startNode = self.roots["q"]!
+                        let secondNode = startNode.children["u"]!
+                        self.traverse(grid: grid, start: startPoint, visited: [], treeNode: secondNode)
+                        return
+                    }
+                    let startChar = Character(grid[startPoint.x][startPoint.y].lowercased())
+                    self.traverse(grid: grid, start: startPoint, visited: [], treeNode: self.roots[startChar]!)
+                }
+            }
+            print("Setting longest words on Dictionary class.")
+            self.delegate?.longestWords = Array(self.gridWords.sorted(by: { $0.count > $1.count }).prefix(10))
+            print(self.delegate?.longestWords)
+        }
+    }
+
+    func traverse(grid: [[String]], start: Coord, visited: [Coord], treeNode: Node) {
+        let adjacents = getAdjacents(of: start, in: grid)
+        if adjacents.count > 0 {
+            for adjacentCoord in adjacents {
+                if visited.contains(adjacentCoord) { continue }
+                let adjacentChar = Character(grid[adjacentCoord.x][adjacentCoord.y].lowercased())
+                if let child = treeNode.children[adjacentChar] {
+                    traverse(grid: grid, start: adjacentCoord, visited: visited + [start], treeNode: child)
+                }
+            }
+        }
+        let word = (visited.map({ grid[$0.x][$0.y] }).joined() + grid[start.x][start.y]).lowercased()
+        if visited.count >= 2 && allWords.contains(word) {
+            self.gridWords.insert(word)
+        }
+    }
+
+    func getAdjacents(of coord: Coord, in grid: [[String]]) -> [Coord] {
+        var temp = [Coord]()
+        let x = coord.x
+        let y = coord.y
+        for i in x-1...x+1 where i >= 0 && i < grid.count {
+            for j in y-1...y+1 where j >= 0 && j < grid[i].count {
+                guard (x, y) != (i, j) else { continue }
+                temp.append(Coord(i, j))
+            }
+        }
+        return temp
+    }
 }
