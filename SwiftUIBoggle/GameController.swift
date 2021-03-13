@@ -51,4 +51,12 @@ class GameController: ObservableObject {
         currentEntry = ""
         selectedCoords = []
     }
+
+    func newGame() {
+        resetEntry()
+        entries = []
+        score = 0
+        timeRemaining = 90
+        grid = GridBuilder.build()
+    }
 }

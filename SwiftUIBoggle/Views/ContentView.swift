@@ -18,6 +18,9 @@ struct ContentView: View {
                 if gameController.timeRemaining <= 0 {
                     Text("GAME OVER").font(.largeTitle)
                     ScoreView(score: gameController.score).font(.largeTitle)
+                    Button("NEW GAME") {
+                        gameController.newGame()
+                    }
                 } else {
                     GameStatusView(score: gameController.score, timeRemaining: gameController.timeRemaining)
                     CurrentEntryView(currentEntry: gameController.currentEntry.firstCapitalised)
@@ -28,6 +31,9 @@ struct ContentView: View {
                             gameController.addToCurrentEntry(letter)
                         }
                     })
+                    .onAppear {
+                        dictionary.getLongestWords(using: gameController.grid)
+                    }
                     HStack(spacing: 32) {
                         Button("Check") {
                             defer {
@@ -62,8 +68,6 @@ struct ContentView: View {
             .padding()
             .onReceive(timer) { _ in
                 gameController.tick()
-            }.onAppear {
-                dictionary.getLongestWords(using: gameController.grid)
             }
         }
     }
