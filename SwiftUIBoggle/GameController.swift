@@ -2,15 +2,20 @@ import SwiftUI
 
 class GameController: ObservableObject {
     private var selectedCoords: [Coord] = []
+    private let gameTime: TimeInterval = 1
 
     @Published private(set) var currentEntry = ""
     @Published private(set) var entries: [String] = []
 
-    @Published private(set) var timeRemaining: TimeInterval = 90
+    @Published private(set) var timeRemaining: TimeInterval
 
     @Published private(set) var score: Int = 0
 
     @Published var grid: Grid = GridBuilder.build()
+
+    init() {
+        timeRemaining = gameTime
+    }
 
     func addCurrentEntry() {
         entries.append(currentEntry)
@@ -56,7 +61,7 @@ class GameController: ObservableObject {
         resetEntry()
         entries = []
         score = 0
-        timeRemaining = 90
+        timeRemaining = gameTime
         grid = GridBuilder.build()
     }
 }

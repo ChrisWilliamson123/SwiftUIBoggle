@@ -73,14 +73,14 @@ class WordTree {
                 for y in 0..<grid[x].count {
                     let startPoint = Coord(x, y)
                     let startString = grid[startPoint.x][startPoint.y].lowercased()
-                    if startString == "Qu" {
+                    if startString == "qu" {
                         let startNode = self.roots["q"]!
                         let secondNode = startNode.children["u"]!
                         self.traverse(grid: grid, start: startPoint, visited: [], treeNode: secondNode)
-                        return
+                    } else {
+                        let startChar = Character(grid[startPoint.x][startPoint.y].lowercased())
+                        self.traverse(grid: grid, start: startPoint, visited: [], treeNode: self.roots[startChar]!)
                     }
-                    let startChar = Character(grid[startPoint.x][startPoint.y].lowercased())
-                    self.traverse(grid: grid, start: startPoint, visited: [], treeNode: self.roots[startChar]!)
                 }
             }
             print("Setting longest words on Dictionary class.")
@@ -94,9 +94,15 @@ class WordTree {
         if adjacents.count > 0 {
             for adjacentCoord in adjacents {
                 if visited.contains(adjacentCoord) { continue }
-                let adjacentChar = Character(grid[adjacentCoord.x][adjacentCoord.y].lowercased())
-                if let child = treeNode.children[adjacentChar] {
-                    traverse(grid: grid, start: adjacentCoord, visited: visited + [start], treeNode: child)
+                let adjacentString = grid[adjacentCoord.x][adjacentCoord.y].lowercased()
+                if adjacentString == "qu" {
+                    if let qChild = treeNode.children["q"], let child = qChild.children["u"] {
+                        traverse(grid: grid, start: adjacentCoord, visited: visited + [start], treeNode: child)
+                    }
+                } else {
+                    if let child = treeNode.children[Array(adjacentString)[0]] {
+                        traverse(grid: grid, start: adjacentCoord, visited: visited + [start], treeNode: child)
+                    }
                 }
             }
         }

@@ -5,7 +5,8 @@ class GridBuilder {
     static let cubes = [
         ["a", "a", "c", "i", "o", "t"],
         ["a", "b", "i", "l", "t", "y"],
-        ["a", "b", "j", "m", "o", "qu"],
+//        ["a", "b", "j", "m", "o", "qu"],
+        ["qu", "qu", "qu", "qu", "qu", "qu"],
         ["a", "c", "d", "e", "m", "p"],
         ["a", "c", "e", "l", "r", "s"],
         ["a", "d", "e", "n", "v", "z"],
