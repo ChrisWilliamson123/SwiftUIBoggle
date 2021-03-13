@@ -19,6 +19,7 @@ struct LetterGridView: View {
                                     impact.impactOccurred()
                                     self.onGridItemTap(coord, letter)
                                 }
+//                                .gesture(LongPressGesture().onChanged { _ in print("tapped")})
                         }
                     }
                 }

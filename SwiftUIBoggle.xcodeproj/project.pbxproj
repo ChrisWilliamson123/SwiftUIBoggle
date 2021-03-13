@@ -18,7 +18,6 @@
 		655C470425E1D5E100DDF8F3 /* Colours.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 655C470325E1D5E100DDF8F3 /* Colours.xcassets */; };
 		655C471225E2AD7800DDF8F3 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C471125E2AD7800DDF8F3 /* GameController.swift */; };
 		656B07D625D6CB65008C4D78 /* GridBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656B07D525D6CB65008C4D78 /* GridBuilder.swift */; };
-		656B07DB25D6D1F5008C4D78 /* WordChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656B07DA25D6D1F5008C4D78 /* WordChecker.swift */; };
 		656B07E025D6D24B008C4D78 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 656B07DF25D6D24B008C4D78 /* words.txt */; };
 		65B7B23D25D7FA5F005E7681 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B7B23C25D7FA5F005E7681 /* SoundPlayer.swift */; };
 		65B7B25225D8013E005E7681 /* incorrect.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 65B7B25125D8013E005E7681 /* incorrect.m4a */; };
@@ -27,6 +26,7 @@
 		65CA5FDD25D9742800CEB53F /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA5FDC25D9742800CEB53F /* ScoreView.swift */; };
 		65CA5FE225D9768C00CEB53F /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA5FE125D9768C00CEB53F /* TimeView.swift */; };
 		65CA5FE725D977E500CEB53F /* CurrentEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA5FE625D977E500CEB53F /* CurrentEntryView.swift */; };
+		65DFBB8425FD6D680032CAD2 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DFBB8325FD6D680032CAD2 /* Node.swift */; };
 		65FDC4C625E1A93F00139EC1 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FDC4C525E1A93F00139EC1 /* Dictionary.swift */; };
 		65FDC4CE25E1ACDB00139EC1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FDC4CD25E1ACDB00139EC1 /* ContentView.swift */; };
 		65FDC4D725E1B36400139EC1 /* LetterGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FDC4D625E1B36400139EC1 /* LetterGridView.swift */; };
@@ -67,7 +67,6 @@
 		655C470325E1D5E100DDF8F3 /* Colours.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colours.xcassets; sourceTree = "<group>"; };
 		655C471125E2AD7800DDF8F3 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		656B07D525D6CB65008C4D78 /* GridBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridBuilder.swift; sourceTree = "<group>"; };
-		656B07DA25D6D1F5008C4D78 /* WordChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordChecker.swift; sourceTree = "<group>"; };
 		656B07DF25D6D24B008C4D78 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		65B7B23C25D7FA5F005E7681 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		65B7B25125D8013E005E7681 /* incorrect.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = incorrect.m4a; sourceTree = "<group>"; };
@@ -76,6 +75,7 @@
 		65CA5FDC25D9742800CEB53F /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		65CA5FE125D9768C00CEB53F /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		65CA5FE625D977E500CEB53F /* CurrentEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentEntryView.swift; sourceTree = "<group>"; };
+		65DFBB8325FD6D680032CAD2 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		65FDC4C525E1A93F00139EC1 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		65FDC4CD25E1ACDB00139EC1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		65FDC4D625E1B36400139EC1 /* LetterGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterGridView.swift; sourceTree = "<group>"; };
@@ -129,22 +129,18 @@
 		6536CF7F25D6BF1D008EB90E /* SwiftUIBoggle */ = {
 			isa = PBXGroup;
 			children = (
+				65DFBB8B25FD6F0D0032CAD2 /* Resources */,
+				65DFBB8225FD6D0B0032CAD2 /* Dictionary Tools */,
 				65FDC4D525E1B33B00139EC1 /* Views */,
 				6536CF8025D6BF1D008EB90E /* SwiftUIBoggleApp.swift */,
 				656B07D525D6CB65008C4D78 /* GridBuilder.swift */,
-				656B07DA25D6D1F5008C4D78 /* WordChecker.swift */,
 				65B7B23C25D7FA5F005E7681 /* SoundPlayer.swift */,
-				65B7B25125D8013E005E7681 /* incorrect.m4a */,
-				65B7B25C25D80283005E7681 /* correct.m4a */,
+				6503C9AC25E1BA6D00651FEA /* Coord.swift */,
+				655C471125E2AD7800DDF8F3 /* GameController.swift */,
 				6536CF8425D6BF20008EB90E /* Assets.xcassets */,
 				655C470325E1D5E100DDF8F3 /* Colours.xcassets */,
 				6536CF8925D6BF20008EB90E /* Info.plist */,
 				6536CF8625D6BF20008EB90E /* Preview Content */,
-				656B07DF25D6D24B008C4D78 /* words.txt */,
-				65CA5FC725D95A2C00CEB53F /* WordTree.swift */,
-				65FDC4C525E1A93F00139EC1 /* Dictionary.swift */,
-				6503C9AC25E1BA6D00651FEA /* Coord.swift */,
-				655C471125E2AD7800DDF8F3 /* GameController.swift */,
 			);
 			path = SwiftUIBoggle;
 			sourceTree = "<group>";
@@ -173,6 +169,26 @@
 				6536CF9F25D6BF20008EB90E /* Info.plist */,
 			);
 			path = SwiftUIBoggleUITests;
+			sourceTree = "<group>";
+		};
+		65DFBB8225FD6D0B0032CAD2 /* Dictionary Tools */ = {
+			isa = PBXGroup;
+			children = (
+				65FDC4C525E1A93F00139EC1 /* Dictionary.swift */,
+				65CA5FC725D95A2C00CEB53F /* WordTree.swift */,
+				65DFBB8325FD6D680032CAD2 /* Node.swift */,
+			);
+			path = "Dictionary Tools";
+			sourceTree = "<group>";
+		};
+		65DFBB8B25FD6F0D0032CAD2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				65B7B25125D8013E005E7681 /* incorrect.m4a */,
+				65B7B25C25D80283005E7681 /* correct.m4a */,
+				656B07DF25D6D24B008C4D78 /* words.txt */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		65FDC4D525E1B33B00139EC1 /* Views */ = {
@@ -333,7 +349,7 @@
 				65CA5FC825D95A2C00CEB53F /* WordTree.swift in Sources */,
 				65CA5FDD25D9742800CEB53F /* ScoreView.swift in Sources */,
 				6536CFAF25D6C1B3008EB90E /* LetterSquareView.swift in Sources */,
-				656B07DB25D6D1F5008C4D78 /* WordChecker.swift in Sources */,
+				65DFBB8425FD6D680032CAD2 /* Node.swift in Sources */,
 				655C471225E2AD7800DDF8F3 /* GameController.swift in Sources */,
 				65CA5FE225D9768C00CEB53F /* TimeView.swift in Sources */,
 				65CA5FE725D977E500CEB53F /* CurrentEntryView.swift in Sources */,

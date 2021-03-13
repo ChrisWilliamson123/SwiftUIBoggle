@@ -2,7 +2,7 @@ import SwiftUI
 
 class GameController: ObservableObject {
     private var selectedCoords: [Coord] = []
-    private let gameTime: TimeInterval = 1
+    private let gameTime: TimeInterval = 90
 
     @Published private(set) var currentEntry = ""
     @Published private(set) var entries: [String] = []
