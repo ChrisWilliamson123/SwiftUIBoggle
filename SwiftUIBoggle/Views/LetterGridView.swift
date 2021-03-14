@@ -1,8 +1,14 @@
 import SwiftUI
+import UIKit
 
 struct LetterGridView: View {
     let grid: Grid
-    let onGridItemTap: (Coord, String) -> ()
+    let onGridItemDrag: (Coord, String) -> ()
+    let onGridDragEnd: () -> ()
+
+    @State var highlighted: Coord? = nil
+
+    @GestureState private var location: CGPoint = .zero
 
     var body: some View {
         ZStack {
@@ -13,17 +19,28 @@ struct LetterGridView: View {
                         ForEach(letters.indices, id: \.self) { x in
                             let letter = letters[x]
                             let coord = Coord(x, y)
-                            LetterSquareView(letter)
-                                .onTapGesture {
-                                    let impact = UIImpactFeedbackGenerator(style: .light)
-                                    impact.impactOccurred()
-                                    self.onGridItemTap(coord, letter)
+                            GeometryReader { geometry -> LetterSquareView in
+                                let insetFrame = geometry.frame(in: .global).inset(by: UIEdgeInsets(all: 10))
+                                if insetFrame.contains(self.location) && self.highlighted != coord {
+                                    DispatchQueue.main.async {
+                                        let impact = UIImpactFeedbackGenerator(style: .light)
+                                        impact.impactOccurred()
+                                        self.onGridItemDrag(coord, letter)
+                                        self.highlighted = coord
+                                    }
                                 }
-//                                .gesture(LongPressGesture().onChanged { _ in print("tapped")})
+                                return LetterSquareView(letter)
+                            }.frame(width: 64, height: 64)
                         }
                     }
                 }
             }
+            .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .global).updating($location) { (value, state, transaction) in
+                state = value.location
+            }.onEnded({ _ in
+                onGridDragEnd()
+                self.highlighted = nil
+            }))
         }
         .padding()
         .background(Color(red: 0.93, green: 0.51, blue: 0.09))
@@ -39,8 +56,16 @@ struct LetterGridView_Previews: PreviewProvider {
             ["E", "F", "G", "H"],
             ["I", "J", "K", "L"],
             ["M", "N", "O", "P"],
-        ]) { (coord, letter) in
+        ], onGridItemDrag: { (coord, letter) in
             print(coord, letter)
-        }
+        }, onGridDragEnd: {
+            print("Drag ended")
+        })
+    }
+}
+
+extension UIEdgeInsets {
+    init(all inset: CGFloat) {
+        self.init(top: inset, left: inset, bottom: inset, right: inset)
     }
 }

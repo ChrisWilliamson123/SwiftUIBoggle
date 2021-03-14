@@ -2,9 +2,11 @@ import SwiftUI
 
 struct LetterSquareView: View {
     let letter: String
+//    let relativeFrame: CGRect
 
     init(_ letter: String) {
         self.letter = letter
+//        self.relativeFrame = relativeFrame
     }
 
     var body: some View {

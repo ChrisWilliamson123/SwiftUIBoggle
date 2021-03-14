@@ -24,30 +24,38 @@ struct ContentView: View {
                 } else {
                     GameStatusView(score: gameController.score, timeRemaining: gameController.timeRemaining)
                     CurrentEntryView(currentEntry: gameController.currentEntry.firstCapitalised)
-                    LetterGridView(grid: gameController.grid, onGridItemTap: { (coord, letter) in
+                    LetterGridView(grid: gameController.grid, onGridItemDrag: { (coord, letter) in
                         if gameController.canNavigateToCoord(coord) {
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
                             gameController.addToCurrentEntry(letter)
                         }
+                    }, onGridDragEnd: {
+                        defer {
+                            gameController.resetEntry()
+                        }
+                        print(gameController.currentEntry)
+                        guard dictionary.isValidWord(gameController.currentEntry) else { return }
+                        gameController.addCurrentEntry()
+                        gameController.increaseScoreForWord(gameController.currentEntry)
                     })
                     .onAppear {
                         dictionary.getLongestWords(using: gameController.grid)
                     }
                     HStack(spacing: 32) {
-                        Button("Check") {
-                            defer {
-                                gameController.resetEntry()
-                            }
-                            print(gameController.currentEntry)
-                            guard dictionary.isValidWord(gameController.currentEntry) else { return }
-                            gameController.addCurrentEntry()
-                            gameController.increaseScoreForWord(gameController.currentEntry)
-                        }
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(40)
+//                        Button("Check") {
+//                            defer {
+//                                gameController.resetEntry()
+//                            }
+//                            print(gameController.currentEntry)
+//                            guard dictionary.isValidWord(gameController.currentEntry) else { return }
+//                            gameController.addCurrentEntry()
+//                            gameController.increaseScoreForWord(gameController.currentEntry)
+//                        }
+//                        .padding()
+//                        .foregroundColor(.white)
+//                        .background(Color.black)
+//                        .cornerRadius(40)
                         Button("Clear") {
                             gameController.resetEntry()
                         }
