@@ -34,35 +34,11 @@ struct ContentView: View {
                         defer {
                             gameController.resetEntry()
                         }
-                        print(gameController.currentEntry)
                         guard dictionary.isValidWord(gameController.currentEntry) else { return }
-                        gameController.addCurrentEntry()
-                        gameController.increaseScoreForWord(gameController.currentEntry)
+                        gameController.addAndScoreEntry()
                     })
                     .onAppear {
                         dictionary.getLongestWords(using: gameController.grid)
-                    }
-                    HStack(spacing: 32) {
-//                        Button("Check") {
-//                            defer {
-//                                gameController.resetEntry()
-//                            }
-//                            print(gameController.currentEntry)
-//                            guard dictionary.isValidWord(gameController.currentEntry) else { return }
-//                            gameController.addCurrentEntry()
-//                            gameController.increaseScoreForWord(gameController.currentEntry)
-//                        }
-//                        .padding()
-//                        .foregroundColor(.white)
-//                        .background(Color.black)
-//                        .cornerRadius(40)
-                        Button("Clear") {
-                            gameController.resetEntry()
-                        }
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(40)
                     }
                     ScrollView {
                         ForEach(gameController.entries.reversed(), id: \.self) {

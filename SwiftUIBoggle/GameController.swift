@@ -17,8 +17,10 @@ class GameController: ObservableObject {
         timeRemaining = gameTime
     }
 
-    func addCurrentEntry() {
+    func addAndScoreEntry() {
+        if entries.contains(currentEntry) { return }
         entries.append(currentEntry)
+        score += scoreForWord(currentEntry)
     }
 
     func addToCurrentEntry(_ toAdd: String) {
@@ -27,10 +29,6 @@ class GameController: ObservableObject {
 
     func tick() {
         if timeRemaining > 0 { timeRemaining -= 1 }
-    }
-
-    func increaseScoreForWord(_ word: String) {
-        score += scoreForWord(word)
     }
 
     private func scoreForWord(_ word: String) -> Int {
