@@ -2,11 +2,11 @@ import SwiftUI
 
 struct LetterSquareView: View {
     let letter: String
-//    let relativeFrame: CGRect
+    let offset: CGPoint
 
-    init(_ letter: String) {
+    init(_ letter: String, offset: CGPoint) {
         self.letter = letter
-//        self.relativeFrame = relativeFrame
+        self.offset = offset
     }
 
     var body: some View {
@@ -17,5 +17,6 @@ struct LetterSquareView: View {
             .background(Color("Bone"))
             .clipped()
             .cornerRadius(6)
+            .offset(x: offset.x, y: offset.y)
     }
 }
