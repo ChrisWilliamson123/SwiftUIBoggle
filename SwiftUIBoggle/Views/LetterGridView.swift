@@ -22,14 +22,6 @@ struct LetterGridView: View {
                             GeometryReader { geometry -> LetterSquareView in
                                 let frame = geometry.frame(in: .global)
                                 let insetFrame = frame.inset(by: UIEdgeInsets(all: 10))
-                                var offset: CGPoint = CGPoint(x: 0, y: 0)
-                                if frame.contains(self.location) {
-                                    let frameXCenter = frame.origin.x + (frame.width/2)
-                                    let frameYCenter = frame.origin.y + (frame.height/2)
-                                    let xOffset = (self.location.x - frameXCenter).withinBounds(lower: -8, upper: 8)
-                                    let yOffset = (self.location.y - frameYCenter).withinBounds(lower: -8, upper: 8)
-                                    offset = CGPoint(x: xOffset, y: yOffset)
-                                }
                                 if insetFrame.contains(self.location) && self.highlighted != coord {
                                     DispatchQueue.main.async {
                                         let impact = UIImpactFeedbackGenerator(style: .light)
@@ -38,7 +30,7 @@ struct LetterGridView: View {
                                         self.highlighted = coord
                                     }
                                 }
-                                return LetterSquareView(letter, offset: offset)
+                                return LetterSquareView(letter)
                             }.frame(width: 64, height: 64)
                         }
                     }
