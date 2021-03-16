@@ -18,11 +18,14 @@ struct ContentView: View {
                 if gameController.timeRemaining <= 0 {
                     Text("GAME OVER").font(.largeTitle)
                     ScoreView(score: gameController.score).font(.largeTitle)
+                    WordGrid(words: dictionary.longestWords ?? [], numberOfColumns: 2)
                     Button("NEW GAME") {
                         gameController.newGame()
                     }
                 } else {
                     GameStatusView(score: gameController.score, timeRemaining: gameController.timeRemaining)
+                    Spacer()
+                    WordGrid(words: gameController.entries, numberOfColumns: 3)
                     CurrentEntryView(currentEntry: gameController.currentEntry.firstCapitalised)
                     LetterGridView(grid: gameController.grid, onGridItemDrag: { (coord, letter) in
                         if gameController.canNavigateToCoord(coord) {
@@ -40,13 +43,13 @@ struct ContentView: View {
                     .onAppear {
                         dictionary.getLongestWords(using: gameController.grid)
                     }
-                    ScrollView {
-                        ForEach(gameController.entries.reversed(), id: \.self) {
-                            Text($0).font(.title)
-                        }
-                    }
+//                    ScrollView {
+//                        ForEach(gameController.entries.reversed(), id: \.self) {
+//                            Text($0.capitalized(with: .current)).font(.title)
+//                        }
+//                    }
                     
-                    Spacer()
+//                    Spacer()
                 }
             }
             .padding()
